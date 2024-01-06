@@ -65,19 +65,13 @@ export class ValorantClient {
   }
 
   private async initializeAsync() {
-    console.log("a");
     await this.setTokens();
-    console.log("b");
     await this.setRegionShard();
-    console.log("c");
-    // await this.setClientVersion();
-    console.log("d");
     this._isInitialized = true;
     console.log("ValorantClient initialized");
   }
 
   public async waitForInitialization(): Promise<void> {
-    console.log("wait for init");
     while (!this._isInitialized) {
       await new Promise(resolve => setTimeout(resolve, 100));
     }
@@ -177,7 +171,7 @@ export class ValorantClient {
         this._puuid = response.data.subject;
       })
       .catch(error => {
-        console.error(error);
+
       });
   }
 }

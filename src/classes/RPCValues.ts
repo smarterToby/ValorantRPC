@@ -18,12 +18,14 @@ export class RPCValues {
 
   private _currentMatchId: string | undefined;
 
-  private _isCustomGame: boolean = false;
+  private _isCustomGame = false;
 
   public static getInstance(): RPCValues {
     if (!RPCValues._instance) {
       RPCValues._instance = new RPCValues();
       this._instance._gameStatus = GameStatus.UNKNOWN;
+    }
+    if (!this._instance._startTimestamp) {
       this._instance._startTimestamp = +new Date();
     }
     return RPCValues._instance;

@@ -28,9 +28,9 @@ export class GameStatusHandler {
   public static async getInstance(): Promise<GameStatusHandler> {
     if (!this._instance) {
       this._instance = new GameStatusHandler();
-      await this._instance
-        .init()
-        .then(() => console.log("GameStatusHandler initialized"));
+      // await this._instance
+      //   .init()
+      //   .then(() => console.log("GameStatusHandler initialized"));
     }
     return this._instance;
   }
@@ -43,7 +43,8 @@ export class GameStatusHandler {
     this.rpcService?.setActivity(this.rpcValues.createActivity());
   }
 
-  public startMonitoring() {
+  public async startMonitoring() {
+    await this.init();
     this.handlePartyStatus();
     this.handleGameStatus();
     this.partyStatusInterval = setInterval(

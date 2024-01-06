@@ -32,7 +32,6 @@ export class RpcService {
   }
 
   public setActivity(activity: DiscordRPC.Presence): void {
-    console.log(activity);
     this._currentActivity = activity;
     this.rpc.setActivity(activity).catch(console.error);
   }
