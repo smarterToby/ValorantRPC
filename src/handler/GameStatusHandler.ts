@@ -155,7 +155,7 @@ export class GameStatusHandler {
               const player = res.Players.find(player => player.Subject === valorantClientPuuid);
               const selectedAgent = findAgentByUuid(player!.CharacterID!);
               this.rpcValues.map = findMapByMapUrl(res.MapID);
-              this.rpcValues.gamemode = this.getGameMode(res.ModeID, res.MatchmakingData!.IsRanked)!;
+              this.rpcValues.gamemode = this.getGameMode(res.ModeID, res.MatchmakingData?.IsRanked)!;
               this.rpcValues.agent = selectedAgent;
               this.rpcValues.isCustomGame = res.ProvisioningFlow === "CustomGame";
             })
@@ -190,7 +190,7 @@ export class GameStatusHandler {
     this.gameStatusInterval = setInterval(() => this.handleGameStatus(), interval);
   }
 
-  private getGameMode(mapId: string, isRanked: boolean): GameModeModel | null {
+  private getGameMode(mapId: string, isRanked?: boolean): GameModeModel | null {
     if (isRanked) {
       return GameModes.STANDARD_COMPETITIVE;
     }
