@@ -3,30 +3,45 @@
   "version": "1.0.0",
   "description": "",
   "main": "src/index.ts",
+  "pkg": {
+    "assets": ["node_modules/axios/**/*"],
+    "scripts": "build/**/*.js",
+    "targets": [
+      "node18-win-x64"
+    ],
+    "outputPath": "dist"
+  },
+  "bin": {
+    "ValorantRPC": "build/index.js"
+  },
+  "type": "module",
   "scripts": {
-    "start": "node build/src/index.js",
+    "start": "node build/index.js",
     "dev": "nodemon src/index.ts",
     "lint": "gts lint",
     "clean": "gts clean",
     "compile": "tsc",
     "fix": "gts fix",
-    "prepare": "npm.cmd run compile",
-    "pretest": "npm.cmd run compile",
-    "posttest": "npm.cmd run lint"
+    "build": "babel src --out-dir build --extensions \".ts\" --source-maps",
+    "package": "pkg package.json"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": ["rich-presence", "discord", "valorant", "riot-games", "rpc", "advanced", "custom"],
+  "author": "smartertoby",
   "license": "ISC",
   "devDependencies": {
+    "@babel/cli": "^7.23.4",
+    "@babel/core": "^7.23.7",
+    "@babel/preset-env": "^7.23.8",
+    "@babel/preset-typescript": "^7.23.3",
     "@types/discord-rpc": "^4.0.8",
-    "@types/node": "^20.8.2",
+    "@types/node": "^20.10.8",
     "gts": "^5.2.0",
     "nodemon": "^3.0.2",
     "ts-node": "^10.9.2",
     "typescript": "~5.2.0"
   },
   "dependencies": {
-    "axios": "^1.6.3",
+    "axios": "^1.6.5",
     "discord-rpc": "^4.0.1"
   }
 }
