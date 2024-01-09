@@ -12,7 +12,7 @@
 - 🔄 **Real-Time Status Updates**: Keep your Discord status updated with your progress in real-time.
 - 🕵️ **Agent Showcase**: Show off the Valorant agent you're currently playing as.
 - 🎉 **Party Size Display**: Indicate how many teammates you’re playing with in your current session.
-- ⌛ **Game Phase Indicator**: Let your friends know whether you’re choosing agents, in-game, or reviewing the match's outcome.
+- ⌛ **Game Phase Indicator**: Let your friends know whether you’re choosing agents, in-game, or waiting for your next game.
 - 🛠️ **No Configuration Hassle**: Just run the executable, and the app handles everything for you.
 - ✅ **User-Friendly**: Enjoy a smooth, straightforward user experience designed for gamers of all levels.
 - 📈 **Enhance Viewer Engagement**: Streamers can share their live game status, adding depth to viewer interaction.
