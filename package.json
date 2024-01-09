@@ -27,7 +27,7 @@
   },
   "keywords": ["rich-presence", "discord", "valorant", "riot-games", "rpc", "advanced", "custom"],
   "author": "smartertoby",
-  "license": "ISC",
+  "license": "MIT",
   "devDependencies": {
     "@babel/cli": "^7.23.4",
     "@babel/core": "^7.23.7",
