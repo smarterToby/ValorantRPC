@@ -5,9 +5,9 @@ import { CurrentGameMatchResponse } from "../interfacees/Api/CurrentGameMatchRes
 import { VersionResponse } from "../interfacees/Api/VersionResponse.model";
 import { PartyPlayerResponse } from "../interfacees/Api/PartyPlayerResponse.model";
 import { PartyResponse } from "../interfacees/Api/PartyResponse.model";
-import { RPCValues } from "../classes/RPCValues";
 import { CurrentGamePlayerResponse } from "../interfacees/Api/CurrentGamePlayerResponse.model";
 import { PreGameMatchResponse } from "../interfacees/Api/PreGameMatchResponse.model";
+import { PlayerInfoResponse } from "../interfacees/Api/PlayerInfoResponse";
 
 export class ValorantApiService {
   private static instance: ValorantApiService;
@@ -36,15 +36,12 @@ export class ValorantApiService {
       this.instance._shard = vc.shard;
       this.instance._clientVersion = vc.clientVersion;
     }
-    console.log("ValorantApiService initialized");
 
     return this.instance;
   }
 
   public getPreGamePlayer(puuid: string): Promise<PreGamePlayerResponse> {
     const URI = `https://glz-${this._region}-1.${this._shard}.a.pvp.net/pregame/v1/players/${puuid}`;
-    // const URI = `https://glz-${this._region}-1.${this._shard}.a.pvp.net/core-game/v1/players/${this._puuid}`;
-
 
     const headers = {
       Authorization: `Bearer ${this._accessToken}`,
@@ -180,4 +177,24 @@ export class ValorantApiService {
         });
     });
   }
+
+  public getAccount(): Promise<PlayerInfoResponse> {
+    const URI: string = "https://auth.riotgames.com/userinfo";
+
+    const headers = {
+      Authorization: `Bearer ${this._accessToken}`
+    };
+
+    return new Promise((resolve, reject) => {
+      axios
+        .get<PlayerInfoResponse>(URI, { headers })
+        .then(res => {
+          return resolve(res.data);
+        })
+        .catch(err => {
+          reject(err);
+        });
+    });
+  }
+
 }

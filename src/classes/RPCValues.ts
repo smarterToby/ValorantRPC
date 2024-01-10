@@ -15,6 +15,7 @@ export class RPCValues {
   private _myTeamWonRounds: number | undefined;
   private _enemyTeamWonRounds: number | undefined;
   private _gameStatus: GameStatus = GameStatus.UNKNOWN;
+  private _trackerNetworkLink: string | undefined;
 
   private _currentMatchId: string | undefined;
 
@@ -54,6 +55,16 @@ export class RPCValues {
         activity = this.createUnknownActivity();
         break;
     }
+
+    if (this._trackerNetworkLink) {
+      activity.buttons = [
+        {
+          label: "Tracker Network Profile",
+          url: this._trackerNetworkLink
+        }
+      ];
+    }
+
     return activity;
   }
 
@@ -109,7 +120,7 @@ export class RPCValues {
 
   private createInProgressActivity(): DiscordRPC.Presence {
     return {
-      details: `Playing ${this.isCustomGame ? "Custom" : ""}${this.gamemode?.displayName}`,
+      details: `Playing ${this.isCustomGame ? "Custom " : ""}${this.gamemode?.displayName}`,
       state: this.partySize === 1 ? `Playing Solo on ${this.map?.displayName}` : `Playing in a party of ${this.partySize} on ${this.map?.displayName}`,
       startTimestamp: this._startTimestamp,
       largeImageKey: "valorant_logo",
@@ -134,6 +145,10 @@ export class RPCValues {
   queueGameMode: ${this._queueGameMode},
   isCustomGame: ${this._isCustomGame}
 }`;
+  }
+
+  set trackerNetworkLink(value: string | undefined) {
+    this._trackerNetworkLink = value;
   }
 
   get startTimestamp(): number | undefined {

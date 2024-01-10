@@ -13,6 +13,7 @@ import { CurrentGamePlayerResponse } from "../interfacees/Api/CurrentGamePlayerR
 import { PreGameMatchResponse } from "../interfacees/Api/PreGameMatchResponse.model";
 import { findGameModeByPath, findQueueGameMode, GameModes } from "../enums/Gamemodes";
 import { GameModeModel } from "../interfacees/Gamemode.model";
+import { PlayerInfoResponse } from "../interfacees/Api/PlayerInfoResponse";
 
 export class GameStatusHandler {
   private static _instance: GameStatusHandler;
@@ -28,9 +29,6 @@ export class GameStatusHandler {
   public static async getInstance(): Promise<GameStatusHandler> {
     if (!this._instance) {
       this._instance = new GameStatusHandler();
-      // await this._instance
-      //   .init()
-      //   .then(() => console.log("GameStatusHandler initialized"));
     }
     return this._instance;
   }
@@ -39,19 +37,30 @@ export class GameStatusHandler {
     this.apiService = await ValorantApiService.getInstance();
     this.rpcService = await RpcService.getInstance();
     this.rpcValues = RPCValues.getInstance();
+    this.rpcValues.trackerNetworkLink = await this.createTrackerNetworkLink();
     await this.rpcService.initialize();
     this.rpcService?.setActivity(this.rpcValues.createActivity());
   }
 
   public async startMonitoring() {
     await this.init();
-    this.handlePartyStatus();
-    this.handleGameStatus();
+    await this.handlePartyStatus();
+    await this.handleGameStatus();
     this.partyStatusInterval = setInterval(
       async () => this.handlePartyStatus(),
       10000
     );
     this.setGameStatusInterval();
+  }
+
+  private async createTrackerNetworkLink() {
+    return this.apiService?.getAccount()
+      .then((res: PlayerInfoResponse) => {
+        return `https://tracker.gg/valorant/profile/riot/${res.acct.game_name}%23${res.acct.tag_line}/overview`;
+      })
+      .catch(err => {
+        return undefined;
+      })
   }
 
   public stopMonitoring() {
