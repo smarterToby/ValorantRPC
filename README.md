@@ -28,11 +28,10 @@
   </div>
   <div style="width: 70%; ">
     <h3>After</h3>
-<img src="assets/example-game.png" alt="after in game" />
+    <img src="assets/example-game.png" alt="after in game" />
     <img src="assets/example-queue.png" alt="after in queue" />
     <img src="assets/example-lobby.png" alt="after in lobby" />
     <img src="assets/example-selecting-agent.png" alt="after selecting agent">
-    
   </div>
 </div>
 
@@ -48,7 +47,7 @@
 
 1. Download the latest version of `ValorantRPC.exe` from
    the [Releases](https://github.com/smarterToby/ValorantRPC/releases) page.
-2. Run the executable file—no installation necessary.
+2. Run the executable file - no installation necessary.
 3. Start Valorant and the application will update your Discord status.
 
 ## Usage
