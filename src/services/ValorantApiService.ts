@@ -1,13 +1,13 @@
-import { ValorantClient } from "./ValorantClient";
-import axios from "axios";
-import { PreGamePlayerResponse } from "../interfacees/Api/PreGamePlayerResponse.model";
-import { CurrentGameMatchResponse } from "../interfacees/Api/CurrentGameMatchResponse.model";
-import { VersionResponse } from "../interfacees/Api/VersionResponse.model";
-import { PartyPlayerResponse } from "../interfacees/Api/PartyPlayerResponse.model";
-import { PartyResponse } from "../interfacees/Api/PartyResponse.model";
-import { RPCValues } from "../classes/RPCValues";
-import { CurrentGamePlayerResponse } from "../interfacees/Api/CurrentGamePlayerResponse.model";
-import { PreGameMatchResponse } from "../interfacees/Api/PreGameMatchResponse.model";
+import {ValorantClient} from './ValorantClient';
+import axios from 'axios';
+import {PreGamePlayerResponse} from '../interfacees/Api/PreGamePlayerResponse.model';
+import {CurrentGameMatchResponse} from '../interfacees/Api/CurrentGameMatchResponse.model';
+import {VersionResponse} from '../interfacees/Api/VersionResponse.model';
+import {PartyPlayerResponse} from '../interfacees/Api/PartyPlayerResponse.model';
+import {PartyResponse} from '../interfacees/Api/PartyResponse.model';
+import {CurrentGamePlayerResponse} from '../interfacees/Api/CurrentGamePlayerResponse.model';
+import {PreGameMatchResponse} from '../interfacees/Api/PreGameMatchResponse.model';
+import {PlayerInfoResponse} from '../interfacees/Api/PlayerInfoResponse';
 
 export class ValorantApiService {
   private static instance: ValorantApiService;
@@ -18,7 +18,6 @@ export class ValorantApiService {
   private _shard: string | undefined;
   private _clientVersion: string | undefined;
   private _currentGameMatchId: string | undefined;
-
 
   get currentGameMatchId(): string | undefined {
     return this._currentGameMatchId;
@@ -36,24 +35,21 @@ export class ValorantApiService {
       this.instance._shard = vc.shard;
       this.instance._clientVersion = vc.clientVersion;
     }
-    console.log("ValorantApiService initialized");
 
     return this.instance;
   }
 
   public getPreGamePlayer(puuid: string): Promise<PreGamePlayerResponse> {
     const URI = `https://glz-${this._region}-1.${this._shard}.a.pvp.net/pregame/v1/players/${puuid}`;
-    // const URI = `https://glz-${this._region}-1.${this._shard}.a.pvp.net/core-game/v1/players/${this._puuid}`;
-
 
     const headers = {
       Authorization: `Bearer ${this._accessToken}`,
-      "X-Riot-Entitlements-JWT": this._entitlementToken
+      'X-Riot-Entitlements-JWT': this._entitlementToken,
     };
 
     return new Promise((resolve, reject) => {
       axios
-        .get<PreGamePlayerResponse>(URI, { headers })
+        .get<PreGamePlayerResponse>(URI, {headers})
         .then(res => {
           return resolve(res.data);
         })
@@ -68,12 +64,12 @@ export class ValorantApiService {
 
     const headers = {
       Authorization: `Bearer ${this._accessToken}`,
-      "X-Riot-Entitlements-JWT": this._entitlementToken
+      'X-Riot-Entitlements-JWT': this._entitlementToken,
     };
 
     return new Promise((resolve, reject) => {
       axios
-        .get<PreGameMatchResponse>(URI, { headers })
+        .get<PreGameMatchResponse>(URI, {headers})
         .then(res => {
           return resolve(res.data);
         })
@@ -83,20 +79,22 @@ export class ValorantApiService {
     });
   }
 
-  public getCurrentGamePlayer(puuid: string): Promise<CurrentGamePlayerResponse> {
+  public getCurrentGamePlayer(
+    puuid: string
+  ): Promise<CurrentGamePlayerResponse> {
     if (!puuid) {
-      return Promise.reject("Puuid is undefined");
+      return Promise.reject('Puuid is undefined');
     }
     const URI = `https://glz-${this._region}-1.${this._shard}.a.pvp.net/core-game/v1/players/${puuid}`;
 
     const headers = {
       Authorization: `Bearer ${this._accessToken}`,
-      "X-Riot-Entitlements-JWT": this._entitlementToken
+      'X-Riot-Entitlements-JWT': this._entitlementToken,
     };
 
     return new Promise((resolve, reject) => {
       axios
-        .get<CurrentGamePlayerResponse>(URI, { headers })
+        .get<CurrentGamePlayerResponse>(URI, {headers})
         .then(res => {
           return resolve(res.data);
         })
@@ -106,17 +104,19 @@ export class ValorantApiService {
     });
   }
 
-  public getCurrentGameMatch(matchId: string): Promise<CurrentGameMatchResponse> {
+  public getCurrentGameMatch(
+    matchId: string
+  ): Promise<CurrentGameMatchResponse> {
     const URI = `https://glz-${this._region}-1.${this._shard}.a.pvp.net/core-game/v1/matches/${matchId}`;
 
     const headers = {
       Authorization: `Bearer ${this._accessToken}`,
-      "X-Riot-Entitlements-JWT": this._entitlementToken
+      'X-Riot-Entitlements-JWT': this._entitlementToken,
     };
 
     return new Promise((resolve, reject) => {
       axios
-        .get<CurrentGameMatchResponse>(URI, { headers })
+        .get<CurrentGameMatchResponse>(URI, {headers})
         .then(res => {
           return resolve(res.data);
         })
@@ -127,7 +127,7 @@ export class ValorantApiService {
   }
 
   public getVersion(): Promise<VersionResponse> {
-    const URI = "https://valorant-api.com/v1/version";
+    const URI = 'https://valorant-api.com/v1/version';
     return axios
       .get<any>(URI)
       .then(res => res.data.data)
@@ -136,22 +136,26 @@ export class ValorantApiService {
       });
   }
 
-  public async getPartyPlayerByPuuid(puuid: string): Promise<PartyPlayerResponse> {
+  public async getPartyPlayerByPuuid(
+    puuid: string
+  ): Promise<PartyPlayerResponse> {
     const URI = `https://glz-${this._region}-1.${this._shard}.a.pvp.net/parties/v1/players/${puuid}`;
 
     if (!this._clientVersion) {
-      this._clientVersion = await this.getVersion().then((res: VersionResponse) => res.version);
+      this._clientVersion = await this.getVersion().then(
+        (res: VersionResponse) => res.version
+      );
     }
 
     const headers = {
       Authorization: `Bearer ${this._accessToken}`,
-      "X-Riot-Entitlements-JWT": this._entitlementToken,
-      "X-Riot-ClientVersion": this._clientVersion
+      'X-Riot-Entitlements-JWT': this._entitlementToken,
+      'X-Riot-ClientVersion': this._clientVersion,
     };
 
     return new Promise((resolve, reject) => {
       axios
-        .get<PartyPlayerResponse>(URI, { headers })
+        .get<PartyPlayerResponse>(URI, {headers})
         .then(res => {
           return resolve(res.data);
         })
@@ -166,12 +170,31 @@ export class ValorantApiService {
 
     const headers = {
       Authorization: `Bearer ${this._accessToken}`,
-      "X-Riot-Entitlements-JWT": this._entitlementToken
+      'X-Riot-Entitlements-JWT': this._entitlementToken,
     };
 
     return new Promise((resolve, reject) => {
       axios
-        .get<PartyResponse>(URI, { headers })
+        .get<PartyResponse>(URI, {headers})
+        .then(res => {
+          return resolve(res.data);
+        })
+        .catch(err => {
+          reject(err);
+        });
+    });
+  }
+
+  public getAccount(): Promise<PlayerInfoResponse> {
+    const URI = 'https://auth.riotgames.com/userinfo';
+
+    const headers = {
+      Authorization: `Bearer ${this._accessToken}`,
+    };
+
+    return new Promise((resolve, reject) => {
+      axios
+        .get<PlayerInfoResponse>(URI, {headers})
         .then(res => {
           return resolve(res.data);
         })

@@ -3,14 +3,14 @@ export type PreGameMatchResponse = {
   ID: string;
   Version: number;
   Teams: {
-    TeamID: ("Blue" | "Red") | string;
+    TeamID: ('Blue' | 'Red') | string;
     Players: {
       /** Player UUID */
       Subject: string;
       /** Character ID */
       CharacterID: string;
-      CharacterSelectionState: "" | "selected" | "locked";
-      PregamePlayerState: "joined";
+      CharacterSelectionState: '' | 'selected' | 'locked';
+      PregamePlayerState: 'joined';
       CompetitiveTier: number;
       PlayerIdentity: {
         /** Player UUID */
@@ -21,12 +21,12 @@ export type PreGameMatchResponse = {
         PlayerTitleID: string;
         AccountLevel: number;
         /** Preferred Level Border ID */
-        PreferredLevelBorderID: string | "";
+        PreferredLevelBorderID: string | '';
         Incognito: boolean;
         HideAccountLevel: boolean;
       };
       SeasonalBadgeInfo: {
-        SeasonID: string | "";
+        SeasonID: string | '';
         NumberOfWins: number;
         WinsByTier: null;
         Rank: number;
@@ -36,14 +36,14 @@ export type PreGameMatchResponse = {
     }[];
   }[];
   AllyTeam: {
-    TeamID: ("Blue" | "Red") | string;
+    TeamID: ('Blue' | 'Red') | string;
     Players: {
       /** Player UUID */
       Subject: string;
       /** Character ID */
       CharacterID: string;
-      CharacterSelectionState: "" | "selected" | "locked";
-      PregamePlayerState: "joined";
+      CharacterSelectionState: '' | 'selected' | 'locked';
+      PregamePlayerState: 'joined';
       CompetitiveTier: number;
       PlayerIdentity: {
         /** Player UUID */
@@ -54,12 +54,12 @@ export type PreGameMatchResponse = {
         PlayerTitleID: string;
         AccountLevel: number;
         /** Preferred Level Border ID */
-        PreferredLevelBorderID: string | "";
+        PreferredLevelBorderID: string | '';
         Incognito: boolean;
         HideAccountLevel: boolean;
       };
       SeasonalBadgeInfo: {
-        SeasonID: string | "";
+        SeasonID: string | '';
         NumberOfWins: number;
         WinsByTier: null;
         Rank: number;
@@ -69,14 +69,14 @@ export type PreGameMatchResponse = {
     }[];
   } | null;
   EnemyTeam: {
-    TeamID: ("Blue" | "Red") | string;
+    TeamID: ('Blue' | 'Red') | string;
     Players: {
       /** Player UUID */
       Subject: string;
       /** Character ID */
       CharacterID: string;
-      CharacterSelectionState: "" | "selected" | "locked";
-      PregamePlayerState: "joined";
+      CharacterSelectionState: '' | 'selected' | 'locked';
+      PregamePlayerState: 'joined';
       CompetitiveTier: number;
       PlayerIdentity: {
         /** Player UUID */
@@ -87,12 +87,12 @@ export type PreGameMatchResponse = {
         PlayerTitleID: string;
         AccountLevel: number;
         /** Preferred Level Border ID */
-        PreferredLevelBorderID: string | "";
+        PreferredLevelBorderID: string | '';
         Incognito: boolean;
         HideAccountLevel: boolean;
       };
       SeasonalBadgeInfo: {
-        SeasonID: string | "";
+        SeasonID: string | '';
         NumberOfWins: number;
         WinsByTier: null;
         Rank: number;
@@ -105,7 +105,7 @@ export type PreGameMatchResponse = {
   MatchCoaches: unknown[];
   EnemyTeamSize: number;
   EnemyTeamLockCount: number;
-  PregameState: "character_select_active" | "provisioned";
+  PregameState: 'character_select_active' | 'provisioned';
   /** Date in ISO 8601 format */
   LastUpdated: string;
   /** Map ID */
@@ -115,7 +115,7 @@ export type PreGameMatchResponse = {
   CastedVotes?: unknown;
   MapSelectSteps: unknown[];
   MapSelectStep: number;
-  Team1: ("Blue" | "Red") | string;
+  Team1: ('Blue' | 'Red') | string;
   GamePodID: string;
   /** Game Mode */
   Mode: string;
@@ -123,8 +123,8 @@ export type PreGameMatchResponse = {
   MUCName: string;
   /** JWT containing match ID and player IDs */
   TeamMatchToken: string;
-  QueueID: string | "";
-  ProvisioningFlowID: "Matchmaking" | "CustomGame";
+  QueueID: string | '';
+  ProvisioningFlowID: 'Matchmaking' | 'CustomGame';
   IsRanked: boolean;
   PhaseTimeRemainingNS: number;
   StepTimeRemainingNS: number;
