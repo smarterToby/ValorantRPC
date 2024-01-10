@@ -1,18 +1,23 @@
-import { ValorantApiService } from "../services/ValorantApiService";
-import { RpcService } from "../services/RpcService";
-import { RPCValues } from "../classes/RPCValues";
-import { GameStatus } from "../enums/GameStatus";
-import { ValorantClient } from "../services/ValorantClient";
-import { PartyPlayerResponse } from "../interfacees/Api/PartyPlayerResponse.model";
-import { PartyResponse } from "../interfacees/Api/PartyResponse.model";
-import { PreGamePlayerResponse } from "../interfacees/Api/PreGamePlayerResponse.model";
-import { CurrentGameMatchResponse } from "../interfacees/Api/CurrentGameMatchResponse.model";
-import { findMapByMapUrl } from "../enums/Maps";
-import { findAgentByUuid } from "../enums/Agents";
-import { CurrentGamePlayerResponse } from "../interfacees/Api/CurrentGamePlayerResponse.model";
-import { PreGameMatchResponse } from "../interfacees/Api/PreGameMatchResponse.model";
-import { findGameModeByPath, findQueueGameMode, GameModes } from "../enums/Gamemodes";
-import { GameModeModel } from "../interfacees/Gamemode.model";
+import {ValorantApiService} from '../services/ValorantApiService';
+import {RpcService} from '../services/RpcService';
+import {RPCValues} from '../classes/RPCValues';
+import {GameStatus} from '../enums/GameStatus';
+import {ValorantClient} from '../services/ValorantClient';
+import {PartyPlayerResponse} from '../interfacees/Api/PartyPlayerResponse.model';
+import {PartyResponse} from '../interfacees/Api/PartyResponse.model';
+import {PreGamePlayerResponse} from '../interfacees/Api/PreGamePlayerResponse.model';
+import {CurrentGameMatchResponse} from '../interfacees/Api/CurrentGameMatchResponse.model';
+import {findMapByMapUrl} from '../enums/Maps';
+import {findAgentByUuid} from '../enums/Agents';
+import {CurrentGamePlayerResponse} from '../interfacees/Api/CurrentGamePlayerResponse.model';
+import {PreGameMatchResponse} from '../interfacees/Api/PreGameMatchResponse.model';
+import {
+  findGameModeByPath,
+  findQueueGameMode,
+  GameModes,
+} from '../enums/Gamemodes';
+import {GameModeModel} from '../interfacees/Gamemode.model';
+import {PlayerInfoResponse} from '../interfacees/Api/PlayerInfoResponse';
 
 export class GameStatusHandler {
   private static _instance: GameStatusHandler;
@@ -24,13 +29,9 @@ export class GameStatusHandler {
   private gameStatusInterval: NodeJS.Timeout | null = null;
   private partyStatusInterval: NodeJS.Timeout | null = null;
 
-
   public static async getInstance(): Promise<GameStatusHandler> {
     if (!this._instance) {
       this._instance = new GameStatusHandler();
-      // await this._instance
-      //   .init()
-      //   .then(() => console.log("GameStatusHandler initialized"));
     }
     return this._instance;
   }
@@ -39,19 +40,31 @@ export class GameStatusHandler {
     this.apiService = await ValorantApiService.getInstance();
     this.rpcService = await RpcService.getInstance();
     this.rpcValues = RPCValues.getInstance();
+    this.rpcValues.trackerNetworkLink = await this.createTrackerNetworkLink();
     await this.rpcService.initialize();
     this.rpcService?.setActivity(this.rpcValues.createActivity());
   }
 
   public async startMonitoring() {
     await this.init();
-    this.handlePartyStatus();
-    this.handleGameStatus();
+    await this.handlePartyStatus();
+    await this.handleGameStatus();
     this.partyStatusInterval = setInterval(
       async () => this.handlePartyStatus(),
       10000
     );
     this.setGameStatusInterval();
+  }
+
+  private async createTrackerNetworkLink() {
+    return this.apiService
+      ?.getAccount()
+      .then((res: PlayerInfoResponse) => {
+        return `https://tracker.gg/valorant/profile/riot/${res.acct.game_name}%23${res.acct.tag_line}/overview`;
+      })
+      .catch(() => {
+        return undefined;
+      });
   }
 
   public stopMonitoring() {
@@ -70,13 +83,11 @@ export class GameStatusHandler {
     const partyId: string | void = await this.apiService
       ?.getPartyPlayerByPuuid(ValorantClient.getInstance().puuid!)
       .then((res: PartyPlayerResponse) => res.CurrentPartyID)
-      .catch(err => {
-      });
+      .catch(() => {});
     const partySize: number | void = await this.apiService
       ?.getPartyById(partyId!)
       .then((res: PartyResponse) => res.Members.length)
-      .catch(err => {
-      });
+      .catch(() => {});
 
     if (partyId && partySize && partySize !== this.rpcValues.partySize) {
       this.rpcValues.partySize = partySize;
@@ -87,45 +98,51 @@ export class GameStatusHandler {
   private async handleGameStatus() {
     let matchId;
     let errorCount = 0;
-    let isRanked: boolean = false;
 
-    await this.apiService?.getPreGamePlayer(ValorantClient.getInstance().puuid!)
+    await this.apiService
+      ?.getPreGamePlayer(ValorantClient.getInstance().puuid!)
       .then((res: PreGamePlayerResponse) => {
         this.rpcValues.gameStatus = GameStatus.AGENT_SELECT;
         matchId = res.MatchID;
         this.resetGameStatusInterval(1500);
       })
-      .catch(err => {
+      .catch(() => {
         errorCount++;
       });
 
-    await this.apiService?.getCurrentGamePlayer(ValorantClient.getInstance().puuid!)
+    await this.apiService
+      ?.getCurrentGamePlayer(ValorantClient.getInstance().puuid!)
       .then((res: CurrentGamePlayerResponse) => {
         this.rpcValues.gameStatus = GameStatus.IN_PROGRESS;
         matchId = res.MatchID;
         this.resetGameStatusInterval(15000);
       })
-      .catch(err => {
+      .catch(() => {
         errorCount++;
       });
 
-    if (this.rpcValues.gameStatus === GameStatus.IN_LOBBY || this.rpcValues.gameStatus === GameStatus.IN_QUEUE) {
-      await this.apiService?.getPartyPlayerByPuuid(ValorantClient.getInstance().puuid!)
+    if (
+      this.rpcValues.gameStatus === GameStatus.IN_LOBBY ||
+      this.rpcValues.gameStatus === GameStatus.IN_QUEUE
+    ) {
+      await this.apiService
+        ?.getPartyPlayerByPuuid(ValorantClient.getInstance().puuid!)
         .then(async (res: PartyPlayerResponse) => {
-          await this.apiService?.getPartyById(res.CurrentPartyID)
+          await this.apiService
+            ?.getPartyById(res.CurrentPartyID)
             .then((res: PartyResponse) => {
-              if (res.State.toLowerCase() === "matchmaking") {
-                this.rpcValues.queueGameMode = findQueueGameMode(res.MatchmakingData.QueueID)!;
+              if (res.State.toLowerCase() === 'matchmaking') {
+                this.rpcValues.queueGameMode = findQueueGameMode(
+                  res.MatchmakingData.QueueID
+                )!;
                 this.rpcValues.gameStatus = GameStatus.IN_QUEUE;
               } else {
                 this.rpcValues.gameStatus = GameStatus.IN_LOBBY;
               }
             })
-            .catch(err => {
-            });
+            .catch(() => {});
         })
-        .catch(err => {
-        });
+        .catch(() => {});
     }
 
     if (errorCount === 2 && this.rpcValues.gameStatus !== GameStatus.IN_QUEUE) {
@@ -136,31 +153,36 @@ export class GameStatusHandler {
 
       switch (gameStatus) {
         case GameStatus.AGENT_SELECT:
-          this.apiService?.getPreGameMatch(matchId!)
+          this.apiService
+            ?.getPreGameMatch(matchId!)
             .then((res: PreGameMatchResponse) => {
               this.rpcValues.map = findMapByMapUrl(res.MapID);
               this.rpcValues.gamemode = this.getGameMode(
                 res.Mode,
                 res.IsRanked
               )!;
-              isRanked = res.IsRanked;
             })
-            .catch(err => {
-            });
+            .catch(() => {});
           break;
         case GameStatus.IN_PROGRESS:
-          await this.apiService?.getCurrentGameMatch(matchId!)
+          await this.apiService
+            ?.getCurrentGameMatch(matchId!)
             .then((res: CurrentGameMatchResponse) => {
               const valorantClientPuuid = ValorantClient.getInstance().puuid;
-              const player = res.Players.find(player => player.Subject === valorantClientPuuid);
+              const player = res.Players.find(
+                player => player.Subject === valorantClientPuuid
+              );
               const selectedAgent = findAgentByUuid(player!.CharacterID!);
               this.rpcValues.map = findMapByMapUrl(res.MapID);
-              this.rpcValues.gamemode = this.getGameMode(res.ModeID, res.MatchmakingData?.IsRanked)!;
+              this.rpcValues.gamemode = this.getGameMode(
+                res.ModeID,
+                res.MatchmakingData?.IsRanked
+              )!;
               this.rpcValues.agent = selectedAgent;
-              this.rpcValues.isCustomGame = res.ProvisioningFlow === "CustomGame";
+              this.rpcValues.isCustomGame =
+                res.ProvisioningFlow === 'CustomGame';
             })
-            .catch(err => {
-            });
+            .catch(() => {});
           break;
         case GameStatus.IN_QUEUE:
           break;
@@ -187,7 +209,10 @@ export class GameStatusHandler {
     if (this.gameStatusInterval) {
       clearInterval(this.gameStatusInterval);
     }
-    this.gameStatusInterval = setInterval(() => this.handleGameStatus(), interval);
+    this.gameStatusInterval = setInterval(
+      () => this.handleGameStatus(),
+      interval
+    );
   }
 
   private getGameMode(mapId: string, isRanked?: boolean): GameModeModel | null {

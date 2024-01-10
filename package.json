@@ -4,7 +4,9 @@
   "description": "",
   "main": "src/index.ts",
   "pkg": {
-    "assets": ["node_modules/axios/**/*"],
+    "assets": [
+      "node_modules/axios/**/*"
+    ],
     "scripts": "build/**/*.js",
     "targets": [
       "node18-win-x64"
@@ -14,7 +16,6 @@
   "bin": {
     "ValorantRPC": "build/index.js"
   },
-  "type": "module",
   "scripts": {
     "start": "node build/index.js",
     "dev": "nodemon src/index.ts",
@@ -25,7 +26,15 @@
     "build": "babel src --out-dir build --extensions \".ts\" --source-maps",
     "package": "pkg package.json"
   },
-  "keywords": ["rich-presence", "discord", "valorant", "riot-games", "rpc", "advanced", "custom"],
+  "keywords": [
+    "rich-presence",
+    "discord",
+    "valorant",
+    "riot-games",
+    "rpc",
+    "advanced",
+    "custom"
+  ],
   "author": "smartertoby",
   "license": "MIT",
   "devDependencies": {
@@ -37,6 +46,7 @@
     "@types/node": "^20.10.8",
     "gts": "^5.2.0",
     "nodemon": "^3.0.2",
+    "pkg": "^5.8.1",
     "ts-node": "^10.9.2",
     "typescript": "~5.2.0"
   },

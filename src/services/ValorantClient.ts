@@ -1,10 +1,10 @@
-import * as path from "path";
-import { readFile } from "fs/promises";
-import axios from "axios";
-import { EntitlementsTokenResponse } from "../interfacees/EntitlementResponse.model";
-import { ValorantApiService } from "./ValorantApiService";
-import { VersionResponse } from "../interfacees/Api/VersionResponse.model";
-import * as https from "https";
+import * as path from 'path';
+import {readFile} from 'fs/promises';
+import axios from 'axios';
+import {EntitlementsTokenResponse} from '../interfacees/EntitlementResponse.model';
+import {ValorantApiService} from './ValorantApiService';
+import {VersionResponse} from '../interfacees/Api/VersionResponse.model';
+import * as https from 'https';
 
 export class ValorantClient {
   private static _instance: ValorantClient;
@@ -68,7 +68,7 @@ export class ValorantClient {
     await this.setTokens();
     await this.setRegionShard();
     this._isInitialized = true;
-    console.log("ValorantClient initialized");
+    console.log('ValorantClient initialized');
   }
 
   public async waitForInitialization(): Promise<void> {
@@ -78,7 +78,7 @@ export class ValorantClient {
   }
 
   private async setClientVersion() {
-    console.log("in setclientversion");
+    console.log('in setclientversion');
     await ValorantApiService.getInstance().then(async apiService => {
       this._clientVersion = await apiService
         .getVersion()
@@ -91,19 +91,19 @@ export class ValorantClient {
     try {
       const localAppData = process.env.LOCALAPPDATA;
       if (!localAppData) {
-        throw new Error("LOCALAPPDATA Umgebungsvariable ist nicht definiert.");
+        throw new Error('LOCALAPPDATA Umgebungsvariable ist nicht definiert.');
       }
 
       const lockFilePath = path.join(
         localAppData,
-        "Riot Games",
-        "Riot Client",
-        "Config",
-        "lockfile"
+        'Riot Games',
+        'Riot Client',
+        'Config',
+        'lockfile'
       );
-      return await readFile(lockFilePath, "utf8");
+      return await readFile(lockFilePath, 'utf8');
     } catch (error) {
-      console.error("Fehler beim Lesen der Datei:", error);
+      console.error('Fehler beim Lesen der Datei:', error);
       return undefined;
     }
   }
@@ -111,7 +111,7 @@ export class ValorantClient {
   private async setTokens(): Promise<void> {
     const lockfile = await this.getLockfile();
 
-    const tokens: string[] = lockfile!.split(":");
+    const tokens: string[] = lockfile!.split(':');
     const port: string = tokens[2];
     const lockfilePassword = tokens[3];
     this.requestTokens(port, lockfilePassword);
@@ -121,17 +121,17 @@ export class ValorantClient {
     try {
       const localAppData = process.env.LOCALAPPDATA;
       if (!localAppData) {
-        throw new Error("LOCALAPPDATA Umgebungsvariable ist nicht definiert.");
+        throw new Error('LOCALAPPDATA Umgebungsvariable ist nicht definiert.');
       }
 
       const logFilePath = path.join(
         localAppData,
-        "VALORANT",
-        "Saved",
-        "Logs",
-        "ShooterGame.log"
+        'VALORANT',
+        'Saved',
+        'Logs',
+        'ShooterGame.log'
       );
-      const fileContent = await readFile(logFilePath, "utf8");
+      const fileContent = await readFile(logFilePath, 'utf8');
       const regex = /https:\/\/glz-(.+?)-1\.(.+?)\.a\.pvp\.net/;
       const match = fileContent.match(regex);
 
@@ -139,20 +139,20 @@ export class ValorantClient {
         this._clientRegion = match[1];
         this._shard = match[2];
       } else {
-        console.log("Keine Übereinstimmung gefunden.");
+        console.log('Keine Übereinstimmung gefunden.');
       }
     } catch (error) {
-      console.error("Fehler beim Lesen der Datei:", error);
+      console.error('Fehler beim Lesen der Datei:', error);
     }
   }
 
   private requestTokens(port: string, lockfilePassword: string) {
     const agent = new https.Agent({
-      rejectUnauthorized: false
+      rejectUnauthorized: false,
     });
 
     const base64Credentials = Buffer.from(`riot:${lockfilePassword}`).toString(
-      "base64"
+      'base64'
     );
 
     axios
@@ -160,9 +160,9 @@ export class ValorantClient {
         `https://127.0.0.1:${port}/entitlements/v1/token`,
         {
           headers: {
-            Authorization: `Basic ${base64Credentials}`
+            Authorization: `Basic ${base64Credentials}`,
           },
-          httpsAgent: agent
+          httpsAgent: agent,
         }
       )
       .then(response => {
@@ -170,8 +170,6 @@ export class ValorantClient {
         this._entitlementToken = response.data.token;
         this._puuid = response.data.subject;
       })
-      .catch(error => {
-
-      });
+      .catch(() => {});
   }
 }

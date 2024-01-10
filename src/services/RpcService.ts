@@ -1,7 +1,6 @@
-import * as DiscordRPC from "discord-rpc";
-import { RPC_CONFIG } from "../rpc/RpcConfig";
-import { RPCValues } from "../classes/RPCValues";
-import { Presence } from "discord-rpc";
+import * as DiscordRPC from 'discord-rpc';
+import {RPC_CONFIG} from '../rpc/RpcConfig';
+import {Presence} from 'discord-rpc';
 
 export class RpcService {
   private rpc: DiscordRPC.Client;
@@ -10,7 +9,7 @@ export class RpcService {
   private _currentActivity: DiscordRPC.Presence | null = null;
 
   private constructor() {
-    this.rpc = new DiscordRPC.Client({ transport: "ipc" });
+    this.rpc = new DiscordRPC.Client({transport: 'ipc'});
     this.CLIENT_ID = RPC_CONFIG.clientId;
   }
 
@@ -24,10 +23,10 @@ export class RpcService {
 
   public async initialize() {
     try {
-      await this.rpc.login({ clientId: this.CLIENT_ID });
-      console.log("RPC connection established");
+      await this.rpc.login({clientId: this.CLIENT_ID});
+      console.log('RPC connection established');
     } catch (error) {
-      console.error("Failed to initialize RPC:", error);
+      console.error('Failed to initialize RPC:', error);
     }
   }
 
