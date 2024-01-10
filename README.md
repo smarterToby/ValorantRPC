@@ -17,6 +17,11 @@
 - ✅ **User-Friendly**: Enjoy a smooth, straightforward user experience designed for gamers of all levels.
 - 📈 **Enhance Viewer Engagement**: Streamers can share their live game status, adding depth to viewer interaction.
 
+## Example Screenshots
+![In Lobby Example](assets/example-lobby.png)
+![In Queue Example](assets/example-queue.png)
+![In Game Example](assets/example-game.png)
+
 ## Getting Started
 
 ### Prerequisites
