@@ -19,9 +19,9 @@ export type PartyPlayerResponse = {
     ExpiresIn: number;
   }[];
   PlatformInfo: {
-    platformType: "PC";
-    platformOS: "Windows";
+    platformType: 'PC';
+    platformOS: 'Windows';
     platformOSVersion: string;
-    platformChipset: "Unknown";
+    platformChipset: 'Unknown';
   };
 };

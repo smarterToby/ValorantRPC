@@ -29,5 +29,5 @@ export interface PlayerInfoResponse {
   jti: string;
   affinity: {
     [x: string]: string;
-  }
+  };
 }

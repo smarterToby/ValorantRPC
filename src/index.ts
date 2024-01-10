@@ -1,14 +1,14 @@
-import { GameStatusHandler } from "./handler/GameStatusHandler";
-import { RpcService } from "./services/RpcService";
+import {GameStatusHandler} from './handler/GameStatusHandler';
+import {RpcService} from './services/RpcService';
 
-import { exec } from "child_process"; // Importieren Sie 'exec' aus dem 'child_process'-Modul
+import {exec} from 'child_process'; // Importieren Sie 'exec' aus dem 'child_process'-Modul
 
 const main = async (): Promise<void> => {
-  console.log("Waiting for Valorant to start");
+  console.log('Waiting for Valorant to start');
   await ensureValorantIsRunning();
   setTimeout(() => {}, 5000);
 
-  console.log("Valorant is running, starting monitoring");
+  console.log('Valorant is running, starting monitoring');
   startMonitoring();
 
   checkIfValorantIsStillRunning();
@@ -33,7 +33,7 @@ const isValorantRunning = async (): Promise<boolean> => {
         reject(err);
         return;
       }
-      resolve(stdout.toLowerCase().includes("valorant.exe"));
+      resolve(stdout.toLowerCase().includes('valorant.exe'));
     });
   });
 };
@@ -45,7 +45,7 @@ const checkIfValorantIsStillRunning = async () => {
 
     const isRunning = await isValorantRunning();
     if (!isRunning && valorantRunning) {
-      console.log("Valorant has stopped running, stopping monitoring");
+      console.log('Valorant has stopped running, stopping monitoring');
       GameStatusHandler.getInstance().then(handler => {
         handler.stopMonitoring();
         RpcService.getInstance().then(service => {
@@ -54,7 +54,7 @@ const checkIfValorantIsStillRunning = async () => {
       });
       valorantRunning = false;
     } else if (isRunning && !valorantRunning) {
-      console.log("Valorant is running again, starting monitoring");
+      console.log('Valorant is running again, starting monitoring');
       startMonitoring();
       valorantRunning = true;
     }

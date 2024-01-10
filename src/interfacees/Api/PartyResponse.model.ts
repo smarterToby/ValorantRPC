@@ -18,7 +18,7 @@ export type PartyResponse = {
       PlayerTitleID: string;
       AccountLevel: number;
       /** Preferred Level Border ID */
-      PreferredLevelBorderID: string | "";
+      PreferredLevelBorderID: string | '';
       Incognito: boolean;
       HideAccountLevel: boolean;
     };
@@ -32,12 +32,12 @@ export type PartyResponse = {
     IsReady: boolean;
     IsModerator: boolean;
     UseBroadcastHUD: boolean;
-    PlatformType: "PC";
+    PlatformType: 'PC';
   }[];
   State: string;
   PreviousState: string;
   StateTransitionReason: string;
-  Accessibility: "OPEN" | "CLOSED";
+  Accessibility: 'OPEN' | 'CLOSED';
   CustomGameData: {
     Settings: {
       /** Map ID */
@@ -55,26 +55,36 @@ export type PartyResponse = {
       } | null;
     };
     Membership: {
-      teamOne: {
-        /** Player UUID */
-        Subject: string;
-      }[] | null;
-      teamTwo: {
-        /** Player UUID */
-        Subject: string;
-      }[] | null;
-      teamSpectate: {
-        /** Player UUID */
-        Subject: string;
-      }[] | null;
-      teamOneCoaches: {
-        /** Player UUID */
-        Subject: string;
-      }[] | null;
-      teamTwoCoaches: {
-        /** Player UUID */
-        Subject: string;
-      }[] | null;
+      teamOne:
+        | {
+            /** Player UUID */
+            Subject: string;
+          }[]
+        | null;
+      teamTwo:
+        | {
+            /** Player UUID */
+            Subject: string;
+          }[]
+        | null;
+      teamSpectate:
+        | {
+            /** Player UUID */
+            Subject: string;
+          }[]
+        | null;
+      teamOneCoaches:
+        | {
+            /** Player UUID */
+            Subject: string;
+          }[]
+        | null;
+      teamTwoCoaches:
+        | {
+            /** Player UUID */
+            Subject: string;
+          }[]
+        | null;
     };
     MaxPartySize: number;
     AutobalanceEnabled: boolean;
@@ -93,10 +103,12 @@ export type PartyResponse = {
   QueueEntryTime: string;
   ErrorNotification: {
     ErrorType: string;
-    ErroredPlayers: {
-      /** Player UUID */
-      Subject: string;
-    }[] | null;
+    ErroredPlayers:
+      | {
+          /** Player UUID */
+          Subject: string;
+        }[]
+      | null;
   };
   RestrictedSeconds: number;
   EligibleQueues: string[];

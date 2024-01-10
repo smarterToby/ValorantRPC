@@ -1,8 +1,8 @@
-import { Agent } from "../interfacees/Agent.model";
-import { Map } from "../interfacees/Map.model";
-import { GameModeModel } from "../interfacees/Gamemode.model";
-import * as DiscordRPC from "discord-rpc";
-import { GameStatus } from "../enums/GameStatus";
+import {Agent} from '../interfacees/Agent.model';
+import {Map} from '../interfacees/Map.model';
+import {GameModeModel} from '../interfacees/Gamemode.model';
+import * as DiscordRPC from 'discord-rpc';
+import {GameStatus} from '../enums/GameStatus';
 
 export class RPCValues {
   private static _instance: RPCValues;
@@ -59,9 +59,9 @@ export class RPCValues {
     if (this._trackerNetworkLink) {
       activity.buttons = [
         {
-          label: "Tracker Network Profile",
-          url: this._trackerNetworkLink
-        }
+          label: 'Tracker Network Profile',
+          url: this._trackerNetworkLink,
+        },
       ];
     }
 
@@ -71,19 +71,19 @@ export class RPCValues {
   private createUnknownActivity(): DiscordRPC.Presence {
     return {
       startTimestamp: this._startTimestamp,
-      largeImageKey: "valorant_logo",
-      largeImageText: "Made by @smartertoby",
-      instance: false
+      largeImageKey: 'valorant_logo',
+      largeImageText: 'Made by @smartertoby',
+      instance: false,
     };
   }
 
   private createLobbyActivity(): DiscordRPC.Presence {
     return {
-      details: "In Lobby",
+      details: 'In Lobby',
       startTimestamp: this._startTimestamp,
-      largeImageKey: "valorant_logo",
-      largeImageText: "Made by @smartertoby",
-      instance: false
+      largeImageKey: 'valorant_logo',
+      largeImageText: 'Made by @smartertoby',
+      instance: false,
     };
   }
 
@@ -91,43 +91,53 @@ export class RPCValues {
     return {
       details: `In Queue ${this.queueGameMode?.displayName}`,
       startTimestamp: this._startTimestamp,
-      largeImageKey: "valorant_logo",
-      largeImageText: "Made by @smartertoby",
-      instance: false
+      largeImageKey: 'valorant_logo',
+      largeImageText: 'Made by @smartertoby',
+      instance: false,
     };
   }
 
   private createAgentSelectActivity(): DiscordRPC.Presence {
     if (this.map?.displayName) {
       return {
-        details: "Selecting Agent",
-        state: this.partySize === 1 ? `Playing Solo on ${this.map?.displayName}` : `Playing in a party of ${this.partySize} on ${this.map?.displayName}`,
+        details: 'Selecting Agent',
+        state:
+          this.partySize === 1
+            ? `Playing Solo on ${this.map?.displayName}`
+            : `Playing in a party of ${this.partySize} on ${this.map?.displayName}`,
         startTimestamp: this._startTimestamp,
-        largeImageKey: "valorant_logo",
-        largeImageText: "Made by @smartertoby",
-        instance: false
+        largeImageKey: 'valorant_logo',
+        largeImageText: 'Made by @smartertoby',
+        instance: false,
       };
     }
     return {
-      details: "Selecting Agent",
-      state: this.partySize === 1 ? `Playing Solo` : `Playing in a party of ${this.partySize}`,
+      details: 'Selecting Agent',
+      state:
+        this.partySize === 1
+          ? 'Playing Solo'
+          : `Playing in a party of ${this.partySize}`,
       startTimestamp: this._startTimestamp,
-      largeImageKey: "valorant_logo",
-      largeImageText: "Made by @smartertoby",
-      instance: false
+      largeImageKey: 'valorant_logo',
+      largeImageText: 'Made by @smartertoby',
+      instance: false,
     };
   }
 
   private createInProgressActivity(): DiscordRPC.Presence {
     return {
-      details: `Playing ${this.isCustomGame ? "Custom " : ""}${this.gamemode?.displayName}`,
-      state: this.partySize === 1 ? `Playing Solo on ${this.map?.displayName}` : `Playing in a party of ${this.partySize} on ${this.map?.displayName}`,
+      details: `Playing ${this.isCustomGame ? 'Custom ' : ''}${this.gamemode
+        ?.displayName}`,
+      state:
+        this.partySize === 1
+          ? `Playing Solo on ${this.map?.displayName}`
+          : `Playing in a party of ${this.partySize} on ${this.map?.displayName}`,
       startTimestamp: this._startTimestamp,
-      largeImageKey: "valorant_logo",
-      largeImageText: "Made by @smartertoby",
+      largeImageKey: 'valorant_logo',
+      largeImageText: 'Made by @smartertoby',
       smallImageKey: `agent_${this.agent?.displayName.toLowerCase()}`,
       smallImageText: `${this.agent?.displayName}`,
-      instance: false
+      instance: false,
     };
   }
 
