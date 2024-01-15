@@ -30,7 +30,7 @@ export interface CurrentGameMatchResponse {
     /** Player UUID */
     Subject: string;
     TeamID: ('Blue' | 'Red') | string;
-    /** Character ID */
+    /** Agents ID */
     CharacterID: string;
     PlayerIdentity: {
       /** Player UUID */

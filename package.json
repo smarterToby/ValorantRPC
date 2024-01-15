@@ -1,7 +1,7 @@
 {
-  "name": "advanced-valorant-discord-rich-presence",
-  "version": "1.0.0",
-  "description": "",
+  "name": "valorant-rpc",
+  "version": "1.1.0",
+  "description": "Broadcast your Valorant exploits live on Discord with real-time status updates!",
   "main": "src/index.ts",
   "pkg": {
     "assets": [
@@ -23,7 +23,7 @@
     "clean": "gts clean",
     "compile": "tsc",
     "fix": "gts fix",
-    "build": "babel src --out-dir build --extensions \".ts\" --source-maps",
+    "build": "npm run clean && babel src --out-dir build --extensions \".ts\"",
     "package": "pkg package.json"
   },
   "keywords": [
@@ -35,7 +35,7 @@
     "advanced",
     "custom"
   ],
-  "author": "smartertoby",
+  "author": "smarterToby",
   "license": "MIT",
   "devDependencies": {
     "@babel/cli": "^7.23.4",
@@ -43,10 +43,15 @@
     "@babel/preset-env": "^7.23.8",
     "@babel/preset-typescript": "^7.23.3",
     "@types/discord-rpc": "^4.0.8",
-    "@types/node": "^20.10.8",
+    "@types/node": "20.11.1",
+    "babel-cli": "^6.26.0",
+    "grunt-cli": "^1.4.3",
+    "grunt-contrib-jshint": "^3.2.0",
+    "grunt-rcedit": "^0.7.0",
     "gts": "^5.2.0",
     "nodemon": "^3.0.2",
     "pkg": "^5.8.1",
+    "rcedit": "^4.0.1",
     "ts-node": "^10.9.2",
     "typescript": "~5.2.0"
   },

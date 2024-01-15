@@ -1,12 +1,6 @@
-import {GameModeModel} from '../interfacees/Gamemode.model';
+import {GameModeModel} from '../interfaces/Gamemode.model';
 
 export const GameModes: {[key: string]: GameModeModel} = {
-  STANDARD: {
-    displayName: 'Competitive',
-    uuid: '96bd3920-4f36-d026-2b28-c683eb0bcac5',
-    assetPath: '/Game/GameModes/Bomb/BombGameMode.BombGameMode_C',
-    queueId: 'competitive',
-  },
   STANDARD_UNRATED: {
     displayName: 'Unrated',
     uuid: '96bd3920-4f36-d026-2b28-c683eb0bcac5',
@@ -80,6 +74,12 @@ export const GameModes: {[key: string]: GameModeModel} = {
       '/Game/GameModes/_Development/Swiftplay_EndOfRoundCredits/Swiftplay_EoRCredits_GameMode.Swiftplay_EoRCredits_GameMode_C',
     queueId: 'swiftplay',
   },
+  CUSTOM: {
+    displayName: 'Custom',
+    uuid: '00000000-0000-0000-0000-000000000000',
+    assetPath: '',
+    queueId: 'custom',
+  },
 } as const;
 export const findGameModeByPath = (inputPath: string): GameModeModel | null => {
   return (
@@ -89,9 +89,9 @@ export const findGameModeByPath = (inputPath: string): GameModeModel | null => {
   );
 };
 
-export const findQueueGameMode = (queueId: string) => {
+export const getGameModeByQueueId = (queueId: string): GameModeModel | null => {
   for (const key in GameModes) {
-    if (GameModes[key].queueId.toLowerCase().includes(queueId.toLowerCase())) {
+    if (GameModes[key].queueId === queueId) {
       return GameModes[key];
     }
   }

@@ -76,12 +76,12 @@ export const Maps = {
   },
 } as const;
 
-type Map = (typeof Maps)[keyof typeof Maps];
+type GameMap = (typeof Maps)[keyof typeof Maps];
 
-export const findMapByUuid = (uuid: string): Map | undefined => {
+export const findMapByUuid = (uuid: string): GameMap | undefined => {
   return Object.values(Maps).find(map => map.uuid === uuid);
 };
 
-export const findMapByMapUrl = (mapUrl: string): Map | undefined => {
+export const findMapByMapUrl = (mapUrl: string): GameMap | undefined => {
   return Object.values(Maps).find(map => map.mapUrl === mapUrl);
 };
