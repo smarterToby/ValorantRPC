@@ -1,5 +1,5 @@
 import * as DiscordRPC from 'discord-rpc';
-import {RPC_CONFIG} from '../rpc/RpcConfig';
+import {RPC_CONFIG} from './RpcConfig';
 import {Presence} from 'discord-rpc';
 
 export class RpcService {

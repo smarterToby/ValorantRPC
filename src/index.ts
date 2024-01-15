@@ -1,7 +1,7 @@
 import {GameStatusHandler} from './handler/GameStatusHandler';
-import {RpcService} from './services/RpcService';
+import {RpcService} from './rpc/RpcService';
 
-import {exec} from 'child_process'; // Importieren Sie 'exec' aus dem 'child_process'-Modul
+import {exec} from 'child_process';
 
 const main = async (): Promise<void> => {
   console.log('Waiting for Valorant to start');

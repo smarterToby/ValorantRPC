@@ -1,4 +1,4 @@
-export type EntitlementsTokenResponse = {
+export type EntitlementsTokenRes = {
   accessToken: string;
   entitlements: unknown[];
   issuer: string;
