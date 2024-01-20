@@ -14,7 +14,7 @@
     "outputPath": "dist"
   },
   "bin": {
-    "ValorantRPC": "build/index.js"
+    "ValorantRPC": "build/src/index.js"
   },
   "scripts": {
     "start": "node build/index.js",
@@ -23,7 +23,7 @@
     "clean": "gts clean",
     "compile": "tsc",
     "fix": "gts fix",
-    "build": "npm run clean && babel src --out-dir build --extensions \".ts\"",
+    "build": "npm run clean && tsc --outDir build",
     "package": "pkg package.json"
   },
   "keywords": [
@@ -38,13 +38,8 @@
   "author": "smarterToby",
   "license": "MIT",
   "devDependencies": {
-    "@babel/cli": "^7.23.4",
-    "@babel/core": "^7.23.7",
-    "@babel/preset-env": "^7.23.8",
-    "@babel/preset-typescript": "^7.23.3",
     "@types/discord-rpc": "^4.0.8",
     "@types/node": "20.11.1",
-    "babel-cli": "^6.26.0",
     "gts": "^5.2.0",
     "nodemon": "^3.0.2",
     "pkg": "^5.8.1",
