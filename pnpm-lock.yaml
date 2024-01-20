@@ -52,9 +52,6 @@ devDependencies:
   pkg:
     specifier: ^5.8.1
     version: 5.8.1
-  rcedit:
-    specifier: ^4.0.1
-    version: 4.0.1
   ts-node:
     specifier: ^10.9.2
     version: 10.9.2(@types/node@20.11.1)(typescript@5.2.2)
@@ -1436,13 +1433,6 @@ packages:
       '@jridgewell/sourcemap-codec': 1.4.15
     dev: true
 
-  /@malept/cross-spawn-promise@1.1.1:
-    resolution: {integrity: sha512-RTBGWL5FWQcg9orDOCcp4LvItNzUPcyEU9bwaeJX0rJ1IQxzucC48Y0/sQLp/g6t99IQgAlGIaesJS+gTn7tVQ==}
-    engines: {node: '>= 10'}
-    dependencies:
-      cross-spawn: 7.0.3
-    dev: true
-
   /@nicolo-ribaudo/chokidar-2@2.1.8-no-fsevents.3:
     resolution: {integrity: sha512-s88O1aVtXftvp5bCPB7WnmXc5IwOZZ7YPuwNPt+GtOOXpPvad1LfbmjYv+qII7zP6RU2QGnqve27dnLycEnyEQ==}
     requiresBuild: true
@@ -2435,15 +2425,6 @@ packages:
 
   /create-require@1.1.1:
     resolution: {integrity: sha512-dcKFX3jn0MpIaXjisoRvexIJVEKzaq7z2rZKxf+MSr9TkdmHmsU4m2lcLojrj/FHl8mk5VxMmYA+ftRkP/3oKQ==}
-    dev: true
-
-  /cross-spawn-windows-exe@1.2.0:
-    resolution: {integrity: sha512-mkLtJJcYbDCxEG7Js6eUnUNndWjyUZwJ3H7bErmmtOYU/Zb99DyUkpamuIZE0b3bhmJyZ7D90uS6f+CGxRRjOw==}
-    engines: {node: '>= 10'}
-    dependencies:
-      '@malept/cross-spawn-promise': 1.1.1
-      is-wsl: 2.2.0
-      which: 2.0.2
     dev: true
 
   /cross-spawn@7.0.3:
@@ -3812,12 +3793,6 @@ packages:
     dev: true
     optional: true
 
-  /is-docker@2.2.1:
-    resolution: {integrity: sha512-F+i2BKsFrH66iaUFc0woD8sLy8getkwTwtOBjvs56Cx4CgJDeKQeqfz8wAYiSb8JOprWhHH5p77PbmYCvvUuXQ==}
-    engines: {node: '>=8'}
-    hasBin: true
-    dev: true
-
   /is-dotfile@1.0.3:
     resolution: {integrity: sha512-9YclgOGtN/f8zx0Pr4FQYMdibBiTaH3sn52vjYip4ZSf6C4/6RfTEZ+MR4GvKhCxdPh21Bg42/WL55f6KSnKpg==}
     engines: {node: '>=0.10.0'}
@@ -3973,13 +3948,6 @@ packages:
   /is-windows@1.0.2:
     resolution: {integrity: sha512-eXK1UInq2bPmjyX6e3VHIzMLobc4J94i4AWn+Hpq3OU5KkrRC96OAcR3PRJ/pGu6m8TRnBHP9dkXQVsT/COVIA==}
     engines: {node: '>=0.10.0'}
-    dev: true
-
-  /is-wsl@2.2.0:
-    resolution: {integrity: sha512-fKzAra0rGJUUBwGBgNkHZuToZcn+TtXHpeCgmkMJMMYx1sQDYaCSyjJBSCa2nH1DGm7s3n1oBnohoVTBaN7Lww==}
-    engines: {node: '>=8'}
-    dependencies:
-      is-docker: 2.2.1
     dev: true
 
   /isarray@0.0.1:
@@ -4978,13 +4946,6 @@ packages:
 
   /rcedit@0.7.0:
     resolution: {integrity: sha512-fhGDD3QW0tNOtltU/2mVp4OMpUH907TTwSUxRQlO04P389ARxq3Zj7b4l1c0Rp1yeFPLj7Y80+Gf4g8azwqRjg==}
-    dev: true
-
-  /rcedit@4.0.1:
-    resolution: {integrity: sha512-bZdaQi34krFWhrDn+O53ccBDw0MkAT2Vhu75SqhtvhQu4OPyFM4RoVheyYiVQYdjhUi6EJMVWQ0tR6bCIYVkUg==}
-    engines: {node: '>= 14.0.0'}
-    dependencies:
-      cross-spawn-windows-exe: 1.2.0
     dev: true
 
   /read-pkg-up@7.0.1:

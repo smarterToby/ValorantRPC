@@ -80,7 +80,7 @@ export class RpcDisplayValues {
   private createAgentSelectActivity(): DiscordRPC.Presence {
     if (this._map?.displayName) {
       return {
-        details: 'Selecting Agent',
+        details: `Selecting Agent${' for ' + this._gamemode?.displayName}`,
         state:
           this.partySize === 1
             ? `Playing Solo on ${this._map?.displayName}`

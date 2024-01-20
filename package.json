@@ -24,7 +24,7 @@
     "compile": "tsc",
     "fix": "gts fix",
     "build": "npm run clean && babel src --out-dir build --extensions \".ts\"",
-    "package": "pkg package.json"
+    "package": "pkg package.json && grunt"
   },
   "keywords": [
     "rich-presence",
@@ -51,7 +51,6 @@
     "gts": "^5.2.0",
     "nodemon": "^3.0.2",
     "pkg": "^5.8.1",
-    "rcedit": "^4.0.1",
     "ts-node": "^10.9.2",
     "typescript": "~5.2.0"
   },
