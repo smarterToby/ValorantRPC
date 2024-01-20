@@ -24,7 +24,7 @@
     "compile": "tsc",
     "fix": "gts fix",
     "build": "npm run clean && babel src --out-dir build --extensions \".ts\"",
-    "package": "pkg package.json && grunt"
+    "package": "pkg package.json"
   },
   "keywords": [
     "rich-presence",
@@ -45,9 +45,6 @@
     "@types/discord-rpc": "^4.0.8",
     "@types/node": "20.11.1",
     "babel-cli": "^6.26.0",
-    "grunt-cli": "^1.4.3",
-    "grunt-contrib-jshint": "^3.2.0",
-    "grunt-rcedit": "^0.7.0",
     "gts": "^5.2.0",
     "nodemon": "^3.0.2",
     "pkg": "^5.8.1",
