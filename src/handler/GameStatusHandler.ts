@@ -1,18 +1,17 @@
-import { LocalApi } from "../services/LocalApi";
-import { RpcService } from "../rpc/RpcService";
-import { RpcDisplayValues } from "../rpc/RpcDisplayValues";
-import { ValorantClientConfig } from "../config/ValorantClientConfig";
-import { GameStatus } from "../enums/GameStatus";
-import { ValPresence } from "../interfaces/api/ValPresence.model";
-import { GameSessionDetails } from "../interfaces/GameSessionDetails.model";
+import {LocalApi} from '../services/LocalApi';
+import {RpcService} from '../rpc/RpcService';
+import {RpcDisplayValues} from '../rpc/RpcDisplayValues';
+import {ValorantClientConfig} from '../config/ValorantClientConfig';
+import {GameStatus} from '../enums/GameStatus';
+import {ValPresence} from '../interfaces/api/ValPresence.model';
+import {GameSessionDetails} from '../interfaces/GameSessionDetails.model';
 import {
   convertStringToSessionLoopState,
-  SessionLoopState
-} from "../enums/SessionLoopState";
-import { GameModes, getGameModeByQueueId } from "../enums/Gamemodes";
-import { findMapByMapUrl } from "../enums/Maps";
-import { ValorantApi } from "../services/ValorantApi";
-import { log } from "node:util";
+  SessionLoopState,
+} from '../enums/SessionLoopState';
+import {GameModes, getGameModeByQueueId} from '../enums/Gamemodes';
+import {findMapByMapUrl} from '../enums/Maps';
+import {ValorantApi} from '../services/ValorantApi';
 
 export class GameStatusHandler {
   private static _instance: GameStatusHandler;
@@ -122,10 +121,10 @@ export class GameStatusHandler {
 
   private async handleInGame(gameStatus: GameSessionDetails) {
     this._gameStatus = GameStatus.IN_PROGRESS;
-    if (gameStatus.provisioningFlow === "CustomGame") {
+    if (gameStatus.provisioningFlow === 'CustomGame') {
       this._rpcDisplayValues.isTheRange = false;
       this._rpcDisplayValues.gamemode = GameModes.CUSTOM;
-    } else if (gameStatus.provisioningFlow === "ShootingRange") {
+    } else if (gameStatus.provisioningFlow === 'ShootingRange') {
       this._rpcDisplayValues.isTheRange = true;
     } else {
       this._rpcDisplayValues.isTheRange = false;
