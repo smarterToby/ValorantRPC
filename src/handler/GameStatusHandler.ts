@@ -64,10 +64,12 @@ export class GameStatusHandler {
   }
 
   private async handleGameStatus() {
-    const presence: ValPresence | undefined | void =
-      await this._localApi.getPresence(this._puuid);
+    const presence: ValPresence | undefined | void = await this._localApi
+      .getPresence(this._puuid)
+      .catch(err => console.error(err));
+    if (!presence) return;
     const gameStatus: GameSessionDetails =
-      this.decodeBase64ToGameSessionDetails(presence!.private!);
+      this.decodeBase64ToGameSessionDetails(presence.private!);
 
     this._rpcDisplayValues.partySize = gameStatus.partySize;
 
@@ -78,6 +80,9 @@ export class GameStatusHandler {
       case SessionLoopState.PREGAME:
         this._gameStatus = GameStatus.AGENT_SELECT;
         this._rpcDisplayValues.map = findMapByMapUrl(gameStatus.matchMap);
+        this._rpcDisplayValues.gamemode = getGameModeByQueueId(
+          gameStatus.queueId
+        )!;
         break;
       case SessionLoopState.INGAME:
         await this.handleInGame(gameStatus);
@@ -99,10 +104,6 @@ export class GameStatusHandler {
 
       return parsedObject as GameSessionDetails;
     } catch (error) {
-      console.error(
-        'Fehler beim Dekodieren oder Parsen des Base64-Strings',
-        error
-      );
       return {} as GameSessionDetails;
     }
   }

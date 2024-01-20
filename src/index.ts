@@ -11,7 +11,7 @@ const main = async (): Promise<void> => {
   console.log('Valorant is running, starting monitoring');
   startMonitoring();
 
-  checkIfValorantIsStillRunning();
+  checkIfValorantIsStillRunning().catch();
 };
 
 const ensureValorantIsRunning = async () => {
@@ -22,7 +22,7 @@ const ensureValorantIsRunning = async () => {
 
 const startMonitoring = () => {
   GameStatusHandler.getInstance().then(handler => {
-    handler.startMonitoring();
+    handler.startMonitoring().catch();
   });
 };
 
@@ -41,7 +41,7 @@ const checkIfValorantIsStillRunning = async () => {
   let valorantRunning = true;
 
   while (true) {
-    await new Promise(resolve => setTimeout(resolve, 10000));
+    await new Promise(resolve => setTimeout(resolve, 2500));
 
     const isRunning = await isValorantRunning();
     if (!isRunning && valorantRunning) {

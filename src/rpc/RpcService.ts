@@ -5,7 +5,7 @@ import {Presence} from 'discord-rpc';
 export class RpcService {
   private rpc: DiscordRPC.Client;
   private static instance: RpcService;
-  private CLIENT_ID: string;
+  private readonly CLIENT_ID: string;
   private _currentActivity: DiscordRPC.Presence | null = null;
 
   private constructor() {
