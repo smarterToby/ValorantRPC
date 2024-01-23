@@ -24,7 +24,7 @@
     "compile": "tsc",
     "fix": "gts fix",
     "build": "npm run clean && tsc --outDir build",
-    "package": "pkg package.json"
+    "package": "npm run build && pkg package.json"
   },
   "keywords": [
     "rich-presence",

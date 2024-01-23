@@ -27,6 +27,8 @@ export class GameStatusHandler {
 
   private _gameStatusInterval: NodeJS.Timeout | null = null;
 
+  private agentCount = 0;
+
   public static async getInstance(): Promise<GameStatusHandler> {
     if (!this._instance) {
       this._instance = new GameStatusHandler();
@@ -36,10 +38,11 @@ export class GameStatusHandler {
 
   public async startMonitoring() {
     await this.init();
-    this._gameStatusInterval = setInterval(
-      async () => await this.handleGameStatus(),
-      2000
-    );
+    this._gameStatusInterval = setInterval(async () => {
+      await this.handleGameStatus();
+      this.agentCount++;
+      if (this.agentCount === 30) this.agentCount = 0;
+    }, 2000);
   }
 
   public stopMonitoring() {
@@ -80,9 +83,7 @@ export class GameStatusHandler {
       case SessionLoopState.PREGAME:
         this._gameStatus = GameStatus.AGENT_SELECT;
         this._rpcDisplayValues.map = findMapByMapUrl(gameStatus.matchMap);
-        this._rpcDisplayValues.gamemode = getGameModeByQueueId(
-          gameStatus.queueId
-        )!;
+        this.setGameModeByProvisioningFlow(gameStatus);
         break;
       case SessionLoopState.INGAME:
         await this.handleInGame(gameStatus);
@@ -121,6 +122,20 @@ export class GameStatusHandler {
 
   private async handleInGame(gameStatus: GameSessionDetails) {
     this._gameStatus = GameStatus.IN_PROGRESS;
+    this.setGameModeByProvisioningFlow(gameStatus);
+    if (this.agentCount === 30 || this.agentCount === 0) {
+      this._rpcDisplayValues.agent = await this._valApi.getSelectedAgent(
+        this._valorantClientConfig.puuid!
+      );
+    }
+    this._rpcDisplayValues.map = findMapByMapUrl(gameStatus.matchMap);
+    this._rpcDisplayValues.matchScoreAlly =
+      gameStatus.partyOwnerMatchScoreAllyTeam;
+    this._rpcDisplayValues.matchScoreEnemy =
+      gameStatus.partyOwnerMatchScoreEnemyTeam;
+  }
+
+  private setGameModeByProvisioningFlow(gameStatus: GameSessionDetails) {
     if (gameStatus.provisioningFlow === 'CustomGame') {
       this._rpcDisplayValues.isTheRange = false;
       this._rpcDisplayValues.gamemode = GameModes.CUSTOM;
@@ -132,13 +147,5 @@ export class GameStatusHandler {
         gameStatus.queueId
       )!;
     }
-    this._rpcDisplayValues.agent = await this._valApi.getSelectedAgent(
-      this._valorantClientConfig.puuid!
-    );
-    this._rpcDisplayValues.map = findMapByMapUrl(gameStatus.matchMap);
-    this._rpcDisplayValues.matchScoreAlly =
-      gameStatus.partyOwnerMatchScoreAllyTeam;
-    this._rpcDisplayValues.matchScoreEnemy =
-      gameStatus.partyOwnerMatchScoreEnemyTeam;
   }
 }
