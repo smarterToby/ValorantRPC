@@ -43,7 +43,7 @@
 
 1. Download the latest version of `ValorantRPC.exe` from
    the [Releases](https://github.com/smarterToby/ValorantRPC/releases) page.
-2. Run the executable file—no installation necessary.
+2. Run the executable file - no installation necessary.
 3. Start Valorant and the application will update your Discord status.
 
 ## Usage
