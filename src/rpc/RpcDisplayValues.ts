@@ -18,6 +18,8 @@ export class RpcDisplayValues {
 
   private _isTheRange = false;
 
+  private _isIdle = false;
+
   public static getInstance(): RpcDisplayValues {
     if (!RpcDisplayValues._instance) {
       RpcDisplayValues._instance = new RpcDisplayValues();
@@ -66,9 +68,17 @@ export class RpcDisplayValues {
   }
 
   private createLobbyActivity(): DiscordRPC.Presence {
-    return {
+    const presence: DiscordRPC.Presence = {
       details: 'In Lobby',
     };
+
+    if (this._isIdle) {
+      presence.details += ' (Idle)';
+      presence.smallImageKey = 'icon_idle';
+      presence.smallImageText = 'Idle';
+    }
+
+    return presence;
   }
 
   private createQueueActivity(): DiscordRPC.Presence {
@@ -115,6 +125,10 @@ export class RpcDisplayValues {
 
   public setTrackerNetworkLink(gameName: string, tagLine: string): void {
     this._trackerNetworkLink = `https://tracker.gg/valorant/profile/riot/${gameName}%23${tagLine}/overview`;
+  }
+
+  set isIdle(value: boolean) {
+    this._isIdle = value;
   }
 
   set agent(value: Agent | undefined) {

@@ -69,12 +69,13 @@ export class GameStatusHandler {
   private async handleGameStatus() {
     const presence: ValPresence | undefined | void = await this._localApi
       .getPresence(this._puuid)
-      .catch(err => console.error(err));
+      .catch();
     if (!presence) return;
     const gameStatus: GameSessionDetails =
       this.decodeBase64ToGameSessionDetails(presence.private!);
 
     this._rpcDisplayValues.partySize = gameStatus.partySize;
+    this._rpcDisplayValues.isIdle = gameStatus.isIdle;
 
     switch (convertStringToSessionLoopState(gameStatus.sessionLoopState)) {
       case SessionLoopState.MENUS:
