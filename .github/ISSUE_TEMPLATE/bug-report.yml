@@ -1,7 +1,6 @@
 name: Bug Report
 description: Report a bug
-title: "[Bug] "
-labels: ["bug", "help wanted"]
+labels: ["bug"]
 body:
   - type: markdown
     attributes:
@@ -11,29 +10,24 @@ body:
     id: description
     attributes:
       label: Describe your issue
-      placeholder: When I do this then this is happening
+      placeholder: When I click here this happens
     validations:
       required: true
-  - type: dropdown
-    id: version
+  - type: textarea
+    id: steps
     attributes:
-      label: ValorantRPC Version
-      description: What version of our software are you running?
-      options:
-        - 1.1.2
-        - 1.1.1
-        - 1.1.0
-        - 1.0.0
-      default: 0
+      label: Steps to reproduce
+      placeholder: |
+        1. Go to page X
+        2. Click here
+        3. Click there
     validations:
       required: true
-  - type: input
-    id: description
+  - type: textarea
+    id: expected
     attributes:
-      label: Operating System
-      placeholder: Whats your operating system?
-    validations:
-      required: true
+      label: What was the expected result?
+      placeholder: I expected this to happen
   - type: textarea
     id: screenshots
     attributes:
