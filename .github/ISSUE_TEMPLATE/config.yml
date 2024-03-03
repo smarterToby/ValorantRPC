@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Contat Me
+    url: https://discordapp.com/users/724712767080235049
+    about: Do you have any problems or questions? Contact me on Discord
+  - name: Before openening a issue
+    url: https://github.com/smarterToby/ValorantRPC/blob/main/CONTRIBUTING.md
+    about: Before opening a new issue, please make sure to read CONTRIBUTING.md

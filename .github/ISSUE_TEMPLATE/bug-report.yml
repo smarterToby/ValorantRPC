@@ -1,0 +1,50 @@
+name: Bug Report
+description: Report a bug
+title: "[Bug] "
+labels: ["bug", "help wanted"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Please fill out the sections below to help everyone identify and fix the bug
+  - type: textarea
+    id: description
+    attributes:
+      label: Describe your issue
+      placeholder: When I do this then this is happening
+    validations:
+      required: true
+  - type: dropdown
+    id: version
+    attributes:
+      label: ValorantRPC Version
+        description: What version of our software are you running?
+        options:
+          - 1.1.2
+          - 1.1.1
+          - 1.1.0
+          - 1.0.0
+        default: 0
+    validations:
+      required: true
+  - type: input
+    id: description
+    attributes:
+      label: Operating System
+      placeholder: Whats your operating system?
+    validations:
+      required: true
+  - type: textarea
+    id: screenshots
+    attributes:
+      label: Put here any screenshots or videos (optional)
+  - type: dropdown
+    id: assign
+    attributes:
+      label: "Would you like to work on this issue?"
+      options:
+        - "Yes"
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting this issue! We will get back to you as soon as possible.
