@@ -1,7 +1,7 @@
 name: Bug Report
 description: Report a bug
 labels: ["bug", "help wanted"]
-title: "[Bug]: "
+title: "[Bug] "
 assignees:
   - smarterToby
 body:
