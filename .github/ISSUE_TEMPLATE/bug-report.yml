@@ -10,24 +10,25 @@ body:
     id: description
     attributes:
       label: Describe your issue
-      placeholder: When I click here this happens
+      placeholder: When I do this then this is happening
     validations:
       required: true
-  - type: textarea
-    id: steps
+  - type: dropdown
+    id: rpc-version
     attributes:
-      label: Steps to reproduce
-      placeholder: |
-        1. Go to page X
-        2. Click here
-        3. Click there
+      label: Which version of ValorantRPC are you using?
+      options:
+        - 1.1.2
+        - 1.1.1
+        - 1.1.0
+        - 1.0.0
+  - type: input
+    id: description
+    attributes:
+      label: Operating System
+      placeholder: Whats your operating system?
     validations:
       required: true
-  - type: textarea
-    id: expected
-    attributes:
-      label: What was the expected result?
-      placeholder: I expected this to happen
   - type: textarea
     id: screenshots
     attributes:
