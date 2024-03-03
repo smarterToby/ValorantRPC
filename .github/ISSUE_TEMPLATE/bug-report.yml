@@ -40,9 +40,9 @@ body:
     validations:
       required: true
   - type: textarea
-      id: screenshots
-      attributes:
-        label: Put here any screenshots or videos (optional)
+    id: screenshots
+    attributes:
+      label: Put here any screenshots or videos (optional)
   - type: dropdown
     id: assign
     attributes:
