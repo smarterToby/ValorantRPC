@@ -22,6 +22,9 @@ body:
         - 1.1.1
         - 1.1.0
         - 1.0.0
+      default: 0
+    validations:
+      required: true
   - type: input
     id: operating-system
     attributes:
@@ -29,10 +32,17 @@ body:
       placeholder: Whats your operating system?
     validations:
       required: true
-  - type: textarea
-    id: screenshots
+  - type: input
+    id: valorant-patch
     attributes:
-      label: Put here any screenshots or videos (optional)
+      label: Valorant Version
+      placeholder: Which version of Valorant are you using?
+    validations:
+      required: true
+  - type: textarea
+      id: screenshots
+      attributes:
+        label: Put here any screenshots or videos (optional)
   - type: dropdown
     id: assign
     attributes:
