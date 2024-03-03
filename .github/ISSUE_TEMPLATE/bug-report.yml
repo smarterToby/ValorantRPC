@@ -23,7 +23,7 @@ body:
         - 1.1.0
         - 1.0.0
   - type: input
-    id: description
+    id: operating-system
     attributes:
       label: Operating System
       placeholder: Whats your operating system?
