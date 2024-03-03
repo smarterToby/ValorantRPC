@@ -1,6 +1,8 @@
 name: Bug Report
 description: Report a bug
-labels: ["bug"]
+labels: ["bug", "help wanted"]
+assignees:
+  - smarterToby
 body:
   - type: markdown
     attributes:
