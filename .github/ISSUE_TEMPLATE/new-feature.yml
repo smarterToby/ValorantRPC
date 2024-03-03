@@ -1,6 +1,7 @@
 name: New feature
 description: Suggest or request a new feature
 labels: ["enhancement"]
+title: "[Feature]: "
 assignees:
   - smarterToby
 body:
