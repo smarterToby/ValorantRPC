@@ -64,6 +64,10 @@ export class RpcDisplayValues {
         },
       ];
     }
+    activity.buttons?.push({
+      label: 'Get ValorantRPC',
+      url: 'https://github.com/smarterToby/ValorantRPC/releases'
+    })
     return activity;
   }
 

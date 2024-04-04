@@ -95,6 +95,10 @@ export const Agents = {
     displayName: 'Jett',
     uuid: 'add6443a-41bd-e414-f6ad-e58d267f4e95',
   },
+  CLOVE: {
+    displayName: 'Clove',
+    uuid: '1dbf2edd-4729-0984-3115-daa5eed44993',
+  },
 } as const;
 
 type Agent = (typeof Agents)[keyof typeof Agents];
