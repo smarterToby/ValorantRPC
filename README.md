@@ -50,6 +50,8 @@
 
 Simply run the `ValorantRPC.exe` file to start sharing your game status on Discord.
 
+> The Rich Presence only works if you are visible in the friend list
+
 ## Support
 
 Encountered a problem? Have a feature request? Open an issue in
