@@ -128,7 +128,10 @@ export class RpcDisplayValues {
   }
 
   public setTrackerNetworkLink(gameName: string, tagLine: string): void {
-    this._trackerNetworkLink = `https://tracker.gg/valorant/profile/riot/${gameName}%23${tagLine}/overview`;
+    const encodedGameName = encodeURIComponent(gameName);
+    const encodedTagLine = encodeURIComponent(tagLine);
+
+    this._trackerNetworkLink = `https://tracker.gg/valorant/profile/riot/${encodedGameName}%23${encodedTagLine}/overview`;
   }
 
   set isIdle(value: boolean) {
