@@ -128,7 +128,6 @@ export class GameStatusHandler {
       this._rpcDisplayValues.agent = await this._valApi.getSelectedAgent(
         this._valorantClientConfig.puuid!
       );
-      console.log(this._rpcDisplayValues.agent);
     }
     this._rpcDisplayValues.map = findMapByMapUrl(gameStatus.matchMap);
     this._rpcDisplayValues.matchScoreAlly =

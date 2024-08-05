@@ -4,6 +4,7 @@ import axios from "axios";
 import { CurrentGameMatchResponse } from "../interfaces/api/CurrentGameMatchResponse.model";
 import { findAgentByUuid } from "../enums/Agents";
 import * as https from "https";
+import { fetchClientVersion } from "../utils";
 
 export class ValorantApi {
   private static _instance: ValorantApi;
@@ -26,7 +27,6 @@ export class ValorantApi {
       this.vc.shard!,
       this.vc.clientRegion!
     ).then(res => {
-      console.log(res);
       return res?.MatchID;
     });
     if (!matchId) {
@@ -38,10 +38,8 @@ export class ValorantApi {
       this.vc.clientRegion!
     )
       .then((res: CurrentGameMatchResponse | null) => {
-        console.log({res});
         const characterId: string = res?.Players.find(p => p.Subject === puuid)
           ?.CharacterID!;
-        console.log({characterId})
         return findAgentByUuid(characterId!);
       })
       .catch(() => {
@@ -53,13 +51,13 @@ export class ValorantApi {
     shard: string,
     region: string
   ): Promise<CurrentGamePlayerResponse | null> {
-    // TODO: ClientVrsion von val api abfragen
+    const clientVersion = await fetchClientVersion();
     const authHeader = {
       Authorization: `Bearer ${this.vc.accessToken}`,
       "X-Riot-Entitlements-JWT": this.vc.entitlementToken!,
       "X-Riot-ClientPlatform":
         "ew0KCSJwbGF0Zm9ybVR5cGUiOiAiUEMiLA0KCSJwbGF0Zm9ybU9TIjogIldpbmRvd3MiLA0KCSJwbGF0Zm9ybU9TVmVyc2lvbiI6ICIxMC4wLjE5MDQyLjEuMjU2LjY0Yml0IiwNCgkicGxhdGZvcm1DaGlwc2V0IjogIlVua25vd24iDQp9",
-      "X-Riot-ClientVersion": "09.02.00.2703179"
+      "X-Riot-ClientVersion": clientVersion
     };
     return await axios
       .get(
@@ -73,17 +71,19 @@ export class ValorantApi {
       });
   }
 
+
   public async getCurrentMatch(
     matchId: string,
     shard: string,
     region: string
   ): Promise<CurrentGameMatchResponse | null> {
+    const clientVersion = await fetchClientVersion();
     const authHeader = {
       Authorization: `Bearer ${this.vc.accessToken}`,
       "X-Riot-Entitlements-JWT": this.vc.entitlementToken!,
       "X-Riot-ClientPlatform":
         "ew0KCSJwbGF0Zm9ybVR5cGUiOiAiUEMiLA0KCSJwbGF0Zm9ybU9TIjogIldpbmRvd3MiLA0KCSJwbGF0Zm9ybU9TVmVyc2lvbiI6ICIxMC4wLjE5MDQyLjEuMjU2LjY0Yml0IiwNCgkicGxhdGZvcm1DaGlwc2V0IjogIlVua25vd24iDQp9",
-      "X-Riot-ClientVersion": "09.02.00.2703179"
+      "X-Riot-ClientVersion": clientVersion
     };
 
     return await axios
