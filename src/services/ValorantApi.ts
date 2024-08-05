@@ -1,16 +1,17 @@
-import {ValorantClientConfig} from '../config/ValorantClientConfig';
-import {CurrentGamePlayerResponse} from '../interfaces/api/CurrentGamePlayerResponse.model';
-import axios from 'axios';
-import {CurrentGameMatchResponse} from '../interfaces/api/CurrentGameMatchResponse.model';
-import {findAgentByUuid} from '../enums/Agents';
-import * as https from 'https';
+import { ValorantClientConfig } from "../config/ValorantClientConfig";
+import { CurrentGamePlayerResponse } from "../interfaces/api/CurrentGamePlayerResponse.model";
+import axios from "axios";
+import { CurrentGameMatchResponse } from "../interfaces/api/CurrentGameMatchResponse.model";
+import { findAgentByUuid } from "../enums/Agents";
+import * as https from "https";
+import { fetchClientVersion } from "../utils";
 
 export class ValorantApi {
   private static _instance: ValorantApi;
   private vc: ValorantClientConfig = ValorantClientConfig.getInstance();
 
   private agent: https.Agent = new https.Agent({
-    rejectUnauthorized: false,
+    rejectUnauthorized: false
   });
 
   public static getInstance(): ValorantApi {
@@ -41,7 +42,8 @@ export class ValorantApi {
           ?.CharacterID!;
         return findAgentByUuid(characterId!);
       })
-      .catch(() => {});
+      .catch(() => {
+      });
   }
 
   public async getCurrentMatchPlayer(
@@ -49,39 +51,50 @@ export class ValorantApi {
     shard: string,
     region: string
   ): Promise<CurrentGamePlayerResponse | null> {
+    const clientVersion = await fetchClientVersion();
     const authHeader = {
       Authorization: `Bearer ${this.vc.accessToken}`,
-      'X-Riot-Entitlements-JWT': this.vc.entitlementToken!,
+      "X-Riot-Entitlements-JWT": this.vc.entitlementToken!,
+      "X-Riot-ClientPlatform":
+        "ew0KCSJwbGF0Zm9ybVR5cGUiOiAiUEMiLA0KCSJwbGF0Zm9ybU9TIjogIldpbmRvd3MiLA0KCSJwbGF0Zm9ybU9TVmVyc2lvbiI6ICIxMC4wLjE5MDQyLjEuMjU2LjY0Yml0IiwNCgkicGxhdGZvcm1DaGlwc2V0IjogIlVua25vd24iDQp9",
+      "X-Riot-ClientVersion": clientVersion
     };
     return await axios
       .get(
         `https://glz-${region}-1.${shard}.a.pvp.net/core-game/v1/players/${puuid}`,
-        {httpsAgent: this.agent, headers: authHeader}
+        { httpsAgent: this.agent, headers: authHeader }
       )
       .then(res => {
         return res.data;
       })
-      .catch(() => {});
+      .catch((err) => {
+      });
   }
+
 
   public async getCurrentMatch(
     matchId: string,
     shard: string,
     region: string
   ): Promise<CurrentGameMatchResponse | null> {
+    const clientVersion = await fetchClientVersion();
     const authHeader = {
       Authorization: `Bearer ${this.vc.accessToken}`,
-      'X-Riot-Entitlements-JWT': this.vc.entitlementToken!,
+      "X-Riot-Entitlements-JWT": this.vc.entitlementToken!,
+      "X-Riot-ClientPlatform":
+        "ew0KCSJwbGF0Zm9ybVR5cGUiOiAiUEMiLA0KCSJwbGF0Zm9ybU9TIjogIldpbmRvd3MiLA0KCSJwbGF0Zm9ybU9TVmVyc2lvbiI6ICIxMC4wLjE5MDQyLjEuMjU2LjY0Yml0IiwNCgkicGxhdGZvcm1DaGlwc2V0IjogIlVua25vd24iDQp9",
+      "X-Riot-ClientVersion": clientVersion
     };
 
     return await axios
       .get(
         `https://glz-${region}-1.${shard}.a.pvp.net/core-game/v1/matches/${matchId}`,
-        {httpsAgent: this.agent, headers: authHeader}
+        { httpsAgent: this.agent, headers: authHeader }
       )
       .then(res => {
         return res.data;
       })
-      .catch(() => {});
+      .catch(() => {
+      });
   }
 }
